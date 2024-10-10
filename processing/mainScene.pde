@@ -5,7 +5,8 @@ class MainScene {
     UIButton debugButton;
     UIButton fitnessButton;
     UIButton stopButton;
-    UIButton calmVsStressButton;   // Combined Calm vs Stress Mode Button
+    UIButton stressButton;   // Combined Calm vs Stress Mode Button
+    UIButton meditationButton;
     boolean isCalmVsStressMode = false;
     
     // For tracking heart rate changes
@@ -13,11 +14,12 @@ class MainScene {
     int currentHeartRate = -1;  // Variable to store real-time heart rate
     
     MainScene() {
-        fitnessButton = new UIButton(90, 100, 120, 40, "Fitness Mode");
-        stopButton = new UIButton(480, 100, 100, 40, "Stop");
-        calmVsStressButton = new UIButton(220, 100, 200, 40, "Calm vs Stress Mode");
+        fitnessButton = new UIButton(90, 120, 150, 40, "Fitness Mode");
+        stopButton = new UIButton(700, 120, 100, 40, "Stop");
+        stressButton = new UIButton(250, 120, 150, 40, "Stress Mode");
+        meditationButton = new UIButton(410, 120, 150, 40, "Meditation Mode");
         stopButton.setDisabled(true); // Stop button initially disabled
-        debugButton = new UIButton(width * .85, 100, 120, 40, "Debug Mode");
+        debugButton = new UIButton(width * .85, 120, 120, 40, "Debug Mode");
         debugButton.text = "Debug: "  + DEBUG_MODE;
 
         timer = new Timer(); // Initialize the Timer class
@@ -41,10 +43,12 @@ class MainScene {
         rect(0, 0, width, .1 * height);
         drawTitle();
         drawGraph();
+        drawBarChart();
         timer.drawTimer();  // Display timer using the Timer class
         fitnessButton.draw();   // Draw Start button
         stopButton.draw();    // Draw Stop button
-        calmVsStressButton.draw(); // Draw Calm vs Stress Mode button
+        stressButton.draw(); // Draw Calm vs Stress Mode button
+        meditationButton.draw();
         debugButton.draw();
         showHeartRate();  // Display real-time heart rate
 
@@ -65,7 +69,7 @@ class MainScene {
         }
         
         // Start Calm vs Stress Mode
-        if (calmVsStressButton.isClicked(mouseX, mouseY)) {
+        if (stressButton.isClicked(mouseX, mouseY)) {
             startCalmVsStressMode();
         }
         
@@ -83,7 +87,11 @@ class MainScene {
         String title2 = " Respiration Monitor";
         fill(32, 92, 122);
         textSize(30);
-        text(title2, (width - textWidth(title2)) / 3.6, .275 * height);
+        text(title2, (width - textWidth(title2)) / 1.1, .275 * height);
+        String title3 = " Cardio Monitor";
+        fill(32, 92, 122);
+        textSize(30);
+        text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
     }
     
     // Method to handle fitness mode
@@ -91,7 +99,7 @@ class MainScene {
         timer.startTimer();  // Track time
         fitnessButton.setDisabled(true);
         stopButton.setDisabled(false);
-        calmVsStressButton.setDisabled(false);
+        stressButton.setDisabled(false);
         isCalmVsStressMode = false;  // Ensure Calm vs Stress mode is off
     }
     
@@ -101,7 +109,7 @@ class MainScene {
         isCalmVsStressMode = true;
         calmVsStressStartTime = millis();  // Record start time
         timer.startTimer();  // Track time
-        calmVsStressButton.setDisabled(true);
+        stressButton.setDisabled(true);
         stopButton.setDisabled(false);
         fitnessButton.setDisabled(false);
     }
@@ -112,7 +120,7 @@ class MainScene {
         timer.stopTimer();
         stopButton.setDisabled(true);
         fitnessButton.setDisabled(false);
-        calmVsStressButton.setDisabled(false);
+        stressButton.setDisabled(false);
         isCalmVsStressMode = false;
     }
 
