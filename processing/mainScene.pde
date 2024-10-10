@@ -13,11 +13,11 @@ class MainScene {
     int currentHeartRate = -1;  // Variable to store real-time heart rate
     
     MainScene() {
-        fitnessButton = new UIButton(90, 30, 120, 40, "Fitness Mode");
-        stopButton = new UIButton(480, 30, 100, 40, "Stop");
-        calmVsStressButton = new UIButton(220, 30, 200, 40, "Calm vs Stress Mode");
+        fitnessButton = new UIButton(90, 100, 120, 40, "Fitness Mode");
+        stopButton = new UIButton(480, 100, 100, 40, "Stop");
+        calmVsStressButton = new UIButton(220, 100, 200, 40, "Calm vs Stress Mode");
         stopButton.setDisabled(true); // Stop button initially disabled
-        debugButton = new UIButton(width * .5, 30, 120, 40, "Debug Mode");
+        debugButton = new UIButton(width * .85, 100, 120, 40, "Debug Mode");
         debugButton.text = "Debug: "  + DEBUG_MODE;
 
         timer = new Timer(); // Initialize the Timer class
@@ -40,7 +40,6 @@ class MainScene {
         fill(32, 92, 122);
         rect(0, 0, width, .1 * height);
         drawTitle();
-        drawBarChart();
         drawGraph();
         timer.drawTimer();  // Display timer using the Timer class
         fitnessButton.draw();   // Draw Start button
@@ -77,14 +76,14 @@ class MainScene {
     }
 
     void drawTitle() {
-        String title1 = "Heart Rate Monitor";
+        String title1 = "ECG Monitor";
         fill(32, 92, 122);
         textSize(30);
-        text(title1, (width - textWidth(title1)) / 2, .480 * height);
-        String title2 = "Exercise Zones";
+        text(title1, (width - textWidth(title1)) /5, .625 * height);
+        String title2 = " Respiration Monitor";
         fill(32, 92, 122);
         textSize(30);
-        text(title2, (width - textWidth(title2)) / 2, .125 * height);
+        text(title2, (width - textWidth(title2)) / 3.6, .275 * height);
     }
     
     // Method to handle fitness mode

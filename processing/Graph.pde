@@ -24,7 +24,7 @@ void setupGraph(){
 }
 
 void drawGraph(){
-    if(!startedReading){return;}
+    //if(!startedReading){return;}
     
     if(timer.isRunning) {
         int heartRate = getHeartRate();
@@ -57,5 +57,7 @@ void drawGraph(){
     lineChart.setMaxX(max(x, MAX_VALUES));
     
     textSize(20);
-    lineChart.draw(0.05*width, .5*height, .9 * width, .45*height);
+    lineChart.draw(0.05*width, .65*height, .9 * width, .3*height);
+    lineChart.draw(0.05*width, .3*height, .9 * width, .3*height);
+
 }

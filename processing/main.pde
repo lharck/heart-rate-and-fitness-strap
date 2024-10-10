@@ -7,7 +7,7 @@ AgeScene ageScene;
 // Scene management
 
 void setup() {
-    size(720, 820);
+    size(1000, 900);
     setupData();
     mainScene = new MainScene();
     ageScene = new AgeScene();

@@ -24,9 +24,9 @@ class Timer {
             int currentTime = millis() - startTime; // Calculate elapsed time
             elapsedTime = formatTime(currentTime);  // Format the time into MM:SS
         }
-        textSize(30);
+        textSize(40);
         fill(255);
-        text(elapsedTime, 650, 50); // Display the elapsed time
+        text(elapsedTime, 900, 45); // Display the elapsed time
     }
 
     // Format the elapsed time into MM:SS format
