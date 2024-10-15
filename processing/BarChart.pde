@@ -25,5 +25,5 @@ void drawBarChart(){
     textSize(20);
 
     barChart.setMaxValue(maxTimeInEachZone);
-    barChart.draw(0.1*width, .15*height, .8 * width, .3*height);
+    barChart.draw(0.1*width, .3*height, .3 * width, .3*height);
 }

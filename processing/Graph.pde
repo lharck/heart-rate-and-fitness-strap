@@ -58,6 +58,6 @@ void drawGraph(){
     
     textSize(20);
     lineChart.draw(0.05*width, .65*height, .9 * width, .3*height);
-    lineChart.draw(0.05*width, .3*height, .9 * width, .3*height);
+    lineChart.draw(0.50*width, .3*height, .45 * width, .3*height);
 
 }
