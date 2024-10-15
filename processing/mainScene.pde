@@ -5,8 +5,9 @@ class MainScene {
     UIButton debugButton;
     UIButton fitnessButton;
     UIButton stopButton;
-    UIButton stressButton;   // Combined Calm vs Stress Mode Button
+
     UIButton meditationButton;
+    UIButton stressButton;   // Combined Calm vs Stress Mode Button
     boolean isCalmVsStressMode = false;
     
     // For tracking heart rate changes
@@ -14,14 +15,18 @@ class MainScene {
     int currentHeartRate = -1;  // Variable to store real-time heart rate
     
     MainScene() {
-        fitnessButton = new UIButton(90, 120, 150, 40, "Fitness Mode");
-        stopButton = new UIButton(700, 120, 100, 40, "Stop");
-        stressButton = new UIButton(250, 120, 150, 40, "Stress Mode");
-        meditationButton = new UIButton(410, 120, 150, 40, "Meditation Mode");
-        stopButton.setDisabled(true); // Stop button initially disabled
-        debugButton = new UIButton(width * .85, 120, 120, 40, "Debug Mode");
-        debugButton.text = "Debug: "  + DEBUG_MODE;
-
+        int btnHeights = 100;
+        
+        stopButton = new UIButton(.77*width, btnHeights, 70, 40, "Pause");
+        stopButton.setDisabled(true);
+        
+        debugButton = new UIButton(width * .85, btnHeights, 120, 40, "Debug: "  + DEBUG_MODE);
+        debugButton.setDisabled(DEBUG_MODE); 
+        
+        fitnessButton = new UIButton(.01*width, btnHeights, 120, 40, "Fitness Mode");
+        stressButton = new UIButton(.135*width, btnHeights, 110, 40, "Stress Mode");
+        meditationButton = new UIButton(.42*width * .6, btnHeights, 150, 40, "Meditation Mode");
+        
         timer = new Timer(); // Initialize the Timer class
 
         setupGraph();
@@ -45,11 +50,14 @@ class MainScene {
         drawGraph();
         drawBarChart();
         timer.drawTimer();  // Display timer using the Timer class
+        
+        // TODO: maybe have the draw functions be called automatically if the scene is the specified scene
         fitnessButton.draw();   // Draw Start button
         stopButton.draw();    // Draw Stop button
         stressButton.draw(); // Draw Calm vs Stress Mode button
         meditationButton.draw();
         debugButton.draw();
+        meditationButton.draw();
         showHeartRate();  // Display real-time heart rate
 
         if (isCalmVsStressMode) {
@@ -92,6 +100,15 @@ class MainScene {
         fill(32, 92, 122);
         textSize(30);
         text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
+    }
+    
+    void drawValues() {
+        fill(0);
+        textSize(30);
+        
+        //text(heartRateText, ( "Heart Rate: ", .275 * height);
+        
+        
     }
     
     // Method to handle fitness mode

@@ -21,7 +21,7 @@ class UIButton {
 
     void draw() {
         fill(disabled ? 150 : 255); // Change color if disabled
-        rect(xPos, yPos, xSize, ySize);
+        rect(xPos, yPos, xSize, ySize, 10);
         fill(0);
         textSize(20);
         textAlign(CENTER, CENTER);

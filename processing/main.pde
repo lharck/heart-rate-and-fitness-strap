@@ -5,7 +5,6 @@ MainScene mainScene;
 AgeScene ageScene;
 
 // Scene management
-
 void setup() {
     size(1000, 900);
     setupData();
