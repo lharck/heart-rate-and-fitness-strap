@@ -13,6 +13,7 @@ class MainScene {
     // For tracking heart rate changes
     int calmVsStressStartTime = -1;
     int currentHeartRate = -1;  // Variable to store real-time heart rate
+    PImage logo;
     
     MainScene() {
         int btnHeights = 100;
@@ -28,6 +29,9 @@ class MainScene {
         meditationButton = new UIButton(.42*width * .6, btnHeights, 150, 40, "Meditation Mode");
         
         timer = new Timer(); // Initialize the Timer class
+
+        logo = loadImage("logo.png");
+
 
         setupGraph();
         setupBarChart();
@@ -46,7 +50,7 @@ class MainScene {
         background(220);
         fill(32, 92, 122);
         rect(0, 0, width, .1 * height);
-        drawTitle();
+        drawTitles();
         drawGraph();
         drawBarChart();
         timer.drawTimer();  // Display timer using the Timer class
@@ -58,6 +62,7 @@ class MainScene {
         meditationButton.draw();
         debugButton.draw();
         meditationButton.draw();
+        image(logo, .01*width, .01*height, .075*width, .075*height);
         showHeartRate();  // Display real-time heart rate
 
         if (isCalmVsStressMode) {
@@ -87,7 +92,7 @@ class MainScene {
         }
     }
 
-    void drawTitle() {
+    void drawTitles() {
         String title1 = "ECG Monitor";
         fill(32, 92, 122);
         textSize(30);
@@ -96,10 +101,12 @@ class MainScene {
         fill(32, 92, 122);
         textSize(30);
         text(title2, (width - textWidth(title2)) / 1.1, .275 * height);
-        String title3 = " Cardio Monitor";
-        fill(32, 92, 122);
-        textSize(30);
-        text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
+      
+        
+        String appName = "Health Tracker";
+        fill(255,255,255);
+        textSize(.06*height);
+        text(appName, .5*width,  .05*height);
     }
     
     void drawValues() {

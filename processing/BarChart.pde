@@ -20,10 +20,20 @@ void setupBarChart(){
 }
 
 
+
 void drawBarChart(){
+    float posX = 0.1*width, posY = .3*height, sizeX = .3 * width, sizeY = .3*height; 
+    float rectX = .5*posX, rectY=.8*posY, rectSizeX=1.25*sizeX, rectSizeY=1.25*sizeY;
+    
     if(!startedReading){return;}
     textSize(20);
-
+    rect(rectX, rectY, rectSizeX, rectSizeY,20);
     barChart.setMaxValue(maxTimeInEachZone);
-    barChart.draw(0.1*width, .3*height, .3 * width, .3*height);
+    barChart.draw(posX, posY, sizeX, sizeY);
+    
+    String title = " Cardio Monitor";
+    fill(32, 92, 122);
+    textSize(30);
+    text(title, rectX+(rectSizeX/2), rectY + (.1*rectSizeY));
+
 }
