@@ -55,14 +55,14 @@ class AgeScene {
                 textSize(30);
                 textAlign(CENTER, CENTER);
                 text("Calculating Your Resting Heart Rate...\nTime till complete: " + (int)(CALIBRATION_TIME - timePassed) +
-                     "\nCurrent Value: " + avgHeartRate, .5 * width, .5 * height);  
+                     "\nCurrent Value: " + currentHeartRate, .5 * width, .5 * height);  
             }
             else if (timePassed >= CALIBRATION_TIME && timePassed <= (CALIBRATION_TIME + 5)) {
                 fill(32, 92, 122);
                 textSize(30);
                 textAlign(CENTER, CENTER);
-                text("Your resting heart rate: " + avgHeartRate, .5 * width, .5 * height);  
-                restingHeartRate = avgHeartRate;
+                text("Your resting heart rate: " + currentHeartRate, .5 * width, .5 * height);  
+                restingHeartRate = currentHeartRate;
             }
             else if (timePassed >= CALIBRATION_TIME + 5) {
                 currentScene = "MainScene";

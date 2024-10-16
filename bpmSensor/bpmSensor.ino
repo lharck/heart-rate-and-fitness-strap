@@ -13,9 +13,9 @@ void loop() {
     //Serial.println('!');
   } else {
     // send the value of analog input 0:
-    Serial.println("ECG:" + String(analogRead(A0)) + "s");
+    Serial.println("ECG: " + String(analogRead(A0)));
   }
-  Serial.println("FSR:" + String(analogRead(A1)) + "s");
+  Serial.println("FSR: " + String(analogRead(A1)));
   //Wait for a bit to keep serial data from saturating
   delay(10);
 }

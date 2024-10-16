@@ -15,7 +15,6 @@ class MainScene {
     float buttonSpacing = 20;
 
     int stressStartTime = -1;
-    int currentHeartRate = -1;  
     
     MainScene() {
         int btnHeights = 100;
@@ -161,19 +160,12 @@ class MainScene {
     void checkStressMode() {
         if (millis() - stressStartTime >= 60000) {  
             if (sensorData.hasKey("Heartrate")) {
-                currentHeartRate = sensorData.get("Heartrate");
-                float averageHeartRate = getAverageHeartRate();
-            
                 int age = ageScene.enteredAge;  
                 int[] heartRateRange = getHeartRateRangeForAge(age);
                 int minHeartRate = heartRateRange[0];
                 int maxHeartRate = heartRateRange[1];
             
-                if (currentHeartRate < averageHeartRate) {
-                    fill(0, 255, 0);  // Green for calm
-                    textSize(25);
-                    text("You are calm", .7 * width, .480 * height);
-                } else if (currentHeartRate > maxHeartRate || currentHeartRate < minHeartRate) {
+                if (currentHeartRate > maxHeartRate || currentHeartRate < minHeartRate) {
                     fill(255, 0, 0);  // Red for stressed
                     textSize(25);
                     text("You are stressed", .7 * width, .480 * height);

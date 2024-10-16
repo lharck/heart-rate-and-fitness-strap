@@ -18,7 +18,7 @@ class StatsScene extends PApplet {
         
         fill(0);
         textSize(15);
-        text("Average Heart Rate: " + getAverageHeartRate(), width / 2, height / 2);  // Example stat
+        text("Current Heart Rate: " + currentHeartRate, width / 2, height / 2);  // Example stat
         text("Max Heart Rate: " + maxHeartRate, width / 2, height / 2 + 30);  // Example stat
         // Add more stats here as needed
     }

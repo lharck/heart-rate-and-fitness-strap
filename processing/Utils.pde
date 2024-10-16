@@ -1,11 +1,13 @@
 color BG_COLOR_DEFAULT = color(220);
 
 float maxHeartRate = 220 - 24;
+float maxFSRReading = 1023;
+float maxECGReading = 1023;
 int[] zones = {60, 70, 80, 90, 100};
 float[] timeInEachZone = {0,0,0,0,0};
 String[] zoneNames = {"Very Light", "Light", "Moderate", "Hard", "Maximum"};
 String currentState = "AskingForAge";
-String currentScene = "MainScene"; 
+String currentScene = "AgeScene"; 
 
 color[] zoneColors = {
     color(173, 173, 173), // grey 
