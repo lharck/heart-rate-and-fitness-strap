@@ -1,38 +1,70 @@
 int CALIBRATION_TIME = 3;
+
 class AgeScene {
-    UIButton nextButton; // Button to proceed to the next scene
-    TEXTBOX ageTextBox;  // Textbox for age input
-    int enteredAge = -1; // Variable to store the entered age
+    UIButton nextButton; 
+    TEXTBOX ageTextBox;  
+    int enteredAge = -1; 
     float startRecordingTimestamp;
-    
+
+    PImage logo;  
+    String title = "Health Tracker";  
+
     AgeScene() {  
-        // Initialize the "Next" button and the text box for age input
-        nextButton = new UIButton(325, 400, 120, 60, "Next");
-        ageTextBox = new TEXTBOX(400, 250, 120, 60); // Textbox with specified position and size
+        nextButton = new UIButton(0.35 * width, 0.65 * height, 0.15 * width, 0.07 * height, "Next"); 
+        ageTextBox = new TEXTBOX((int)(0.45 * width), (int)(0.435 * height), (int)(0.2 * width), 35);  
+
+        logo = loadImage("logo.png");
+        if (logo == null) {
+            println("Logo failed to load");
+        }
     }
 
     void draw() {
-        background(220);
-        fill(255);
+        background(245);
         fill(32, 92, 122);
-        textSize(40);
-        
-        if(currentState == "AskingForAge" ) {
-            text("Enter your age:", 270, 275);
+        rect(0, 0, width, .1 * height);
+        println("Drawing AgeScene");
+
+        if (logo != null) {
+            image(logo, .009 * width, .009 * height, .09 * width, .09 * height);
+        } else {
+            println("Logo is null, check file path");
+        }
+
+        fill(255, 255, 255);
+        textSize(.06 * height);
+        textAlign(CENTER, CENTER);
+        text(title, .5 * width, .05 * height);
+
+        if (currentState == "AskingForAge") {
+            fill(32, 92, 122);
+            textSize(40);
+            textAlign(RIGHT, CENTER); 
+            text("Enter your age:", 0.4 * width, 0.45 * height); 
+
             ageTextBox.DRAW();
-            nextButton.draw();
+
+            nextButton.draw();  
         } 
-        else if(currentState == "CalcHeartRate") {
-            float timePassed = (millis() - startRecordingTimestamp)/1000;
+        else if (currentState == "CalcHeartRate") {
+            float timePassed = (millis() - startRecordingTimestamp) / 1000;
             println(timePassed);
-            if(timePassed < CALIBRATION_TIME){
-                text("Calculating Your Resting Heart Rate...\nTime till complete: " + (int)(CALIBRATION_TIME-timePassed) + "\nCurrent Value: " + avgHeartRate, 350, 275);  
+
+            if (timePassed < CALIBRATION_TIME) {
+                fill(32, 92, 122);
+                textSize(30);
+                textAlign(CENTER, CENTER);
+                text("Calculating Your Resting Heart Rate...\nTime till complete: " + (int)(CALIBRATION_TIME - timePassed) +
+                     "\nCurrent Value: " + avgHeartRate, .5 * width, .5 * height);  
             }
-            else if(timePassed >= CALIBRATION_TIME && timePassed <= (CALIBRATION_TIME+5)){
-                text("Your resting heart rate: " + avgHeartRate, 350, 275);  
+            else if (timePassed >= CALIBRATION_TIME && timePassed <= (CALIBRATION_TIME + 5)) {
+                fill(32, 92, 122);
+                textSize(30);
+                textAlign(CENTER, CENTER);
+                text("Your resting heart rate: " + avgHeartRate, .5 * width, .5 * height);  
                 restingHeartRate = avgHeartRate;
             }
-            else if(timePassed >= CALIBRATION_TIME){
+            else if (timePassed >= CALIBRATION_TIME + 5) {
                 currentScene = "MainScene";
             }
         }
@@ -43,27 +75,24 @@ class AgeScene {
             ageTextBox.PRESSED(mouseX, mouseY);
 
             if (nextButton.isClicked(mouseX, mouseY)) {
-                // Validate if age has been entered and is numeric
                 if (ageTextBox.Text.length() > 0 && isNumeric(ageTextBox.Text)) {
-                    enteredAge = int(ageTextBox.Text); // Store the entered age
-                    maxHeartRate = 220 - enteredAge; // Update maxHeartRate
-                    //println("Age entered: " + enteredAge + ", Max Heart Rate: " + maxHeartRate); 
-                    currentState = "CalcHeartRate";
-                    startRecordingTimestamp = millis();
-                    
+                    enteredAge = int(ageTextBox.Text);
+                    maxHeartRate = 220 - enteredAge; 
+                    currentState = "CalcHeartRate";   
+                    startRecordingTimestamp = millis(); 
                 } else {
-                    println("Please enter a valid age.");
+                    println("Please enter a valid age."); 
                 }
             }
         }
     }
 
     void keyPressed() {
-        // Handle typing input in the text box
+        
         ageTextBox.KEYPRESSED(key, keyCode);
     }
 
-    // Utility function to check if a string is numeric
+    
     boolean isNumeric(String str) {
         try {
             int num = int(str);

@@ -1,28 +1,50 @@
-Timer timer;  
+Timer timer;
 
 class MainScene {
     
     UIButton debugButton;
     UIButton fitnessButton;
     UIButton stopButton;
-    UIButton stressButton;   // Combined Calm vs Stress Mode Button
     UIButton meditationButton;
+    UIButton stressButton;   
     boolean isCalmVsStressMode = false;
     
-    // For tracking heart rate changes
-    int calmVsStressStartTime = -1;
-    int currentHeartRate = -1;  // Variable to store real-time heart rate
     
-    MainScene() {
-        fitnessButton = new UIButton(90, 120, 150, 40, "Fitness Mode");
-        stopButton = new UIButton(700, 120, 100, 40, "Stop");
-        stressButton = new UIButton(250, 120, 150, 40, "Stress Mode");
-        meditationButton = new UIButton(410, 120, 150, 40, "Meditation Mode");
-        stopButton.setDisabled(true); // Stop button initially disabled
-        debugButton = new UIButton(width * .85, 120, 120, 40, "Debug Mode");
-        debugButton.text = "Debug: "  + DEBUG_MODE;
+    int calmVsStressStartTime = -1;
+    int currentHeartRate = -1;  
+    PImage logo;
+    
+    float buttonSpacing = 20;
 
-        timer = new Timer(); // Initialize the Timer class
+    MainScene() {
+        int btnHeights = 100;
+
+        
+        fitnessButton = new UIButton(.01 * width, btnHeights, .15 * width, .07 * height, "Fitness Mode", color(50, 205, 50));
+        fitnessButton.setRoundedCorners(10);
+        fitnessButton.setShadow(true);
+
+        stressButton = new UIButton(fitnessButton.xPos + fitnessButton.xSize + buttonSpacing, btnHeights, .15 * width, .07 * height, "Stress Mode", color(255, 165, 0));
+        stressButton.setRoundedCorners(10);
+        stressButton.setShadow(true);
+
+        meditationButton = new UIButton(stressButton.xPos + stressButton.xSize + buttonSpacing, btnHeights, .15 * width, .07 * height, "Meditation Mode", color(100, 149, 237));
+        meditationButton.setRoundedCorners(10);
+        meditationButton.setShadow(true);
+
+        stopButton = new UIButton(meditationButton.xPos + meditationButton.xSize + buttonSpacing + 150, btnHeights , .15 * width, .07 * height, "Pause", color(255, 99, 71));
+        stopButton.setDisabled(true);
+        stopButton.setRoundedCorners(10);
+        stopButton.setShadow(true);
+
+        debugButton = new UIButton(stopButton.xPos + stopButton.xSize + buttonSpacing , btnHeights, .15 * width, .07 * height, "Debug: "  + DEBUG_MODE, color(70, 130, 180));
+        debugButton.setDisabled(DEBUG_MODE); 
+        debugButton.setRoundedCorners(10);
+        debugButton.setShadow(true);
+        
+        timer = new Timer(); 
+
+        logo = loadImage("logo.png");
 
         setupGraph();
         setupBarChart();
@@ -30,45 +52,49 @@ class MainScene {
 
     void showHeartRate() {
         if (!sensorData.hasKey("Heartrate")) { return; }
-        currentHeartRate = sensorData.get("Heartrate");  // Get the real-time heart rate
+        currentHeartRate = sensorData.get("Heartrate");  
         
         textSize(25);
-        fill(255,0,0);  
-        text(currentHeartRate, .125 * width, .480 * height);  // Display real-time heart rate
+        fill(255, 0, 0);  
+        textAlign(CENTER, CENTER);
+        text(currentHeartRate, .5 * width, .25 * height);  
     }
 
     void draw() {
-        background(220);
+        background(245);  
         fill(32, 92, 122);
         rect(0, 0, width, .1 * height);
-        drawTitle();
+        
+        drawTitles();
         drawGraph();
         drawBarChart();
-        timer.drawTimer();  // Display timer using the Timer class
-        fitnessButton.draw();   // Draw Start button
-        stopButton.draw();    // Draw Stop button
-        stressButton.draw(); // Draw Calm vs Stress Mode button
+        timer.drawTimer();  
+        
+        // Draw buttons
+        fitnessButton.draw();   
+        stopButton.draw();    
+        stressButton.draw();
         meditationButton.draw();
         debugButton.draw();
-        showHeartRate();  // Display real-time heart rate
+        
+        image(logo, .009 * width, .009 * height, .09 * width, .09 * height);  // Add logo with proportional size
+        
+        showHeartRate();  
 
         if (isCalmVsStressMode) {
-            checkCalmVsStressMode();  // Continuously check the Calm vs Stress mode
+            checkCalmVsStressMode();  
         }
     }
 
     void mousePressed() {
-        // Start fitness mode
         if (fitnessButton.isClicked(mouseX, mouseY)) {
             startFitnessMode();
         }
         
-        // Stop modes
         if (stopButton.isClicked(mouseX, mouseY)) {
             stopModes();
         }
         
-        // Start Calm vs Stress Mode
         if (stressButton.isClicked(mouseX, mouseY)) {
             startCalmVsStressMode();
         }
@@ -79,22 +105,29 @@ class MainScene {
         }
     }
 
-    void drawTitle() {
+    void drawTitles() {
         String title1 = "ECG Monitor";
         fill(32, 92, 122);
         textSize(30);
-        text(title1, (width - textWidth(title1)) /5, .625 * height);
-        String title2 = " Respiration Monitor";
-        fill(32, 92, 122);
-        textSize(30);
-        text(title2, (width - textWidth(title2)) / 1.1, .275 * height);
-        String title3 = " Cardio Monitor";
-        fill(32, 92, 122);
-        textSize(30);
-        text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
+        textAlign(CENTER, CENTER);
+        text(title1, width / 5, .625 * height);
+        
+        String title2 = "Respiration Monitor";
+        textAlign(CENTER, CENTER);
+        text(title2, width * 4 / 5, .275 * height);
+        
+        String appName = "Health Tracker";
+        fill(255, 255, 255);
+        textSize(.06 * height);
+        textAlign(CENTER, CENTER);
+        text(appName, .5 * width,  .05 * height);
     }
     
-    // Method to handle fitness mode
+    void drawValues() {
+        fill(0);
+        textSize(30);
+    }
+
     void startFitnessMode() {
         timer.startTimer();  // Track time
         fitnessButton.setDisabled(true);
@@ -103,7 +136,6 @@ class MainScene {
         isCalmVsStressMode = false;  // Ensure Calm vs Stress mode is off
     }
     
-    // Method to handle Calm vs Stress mode
     void startCalmVsStressMode() {
         restartData();
         isCalmVsStressMode = true;
@@ -116,7 +148,6 @@ class MainScene {
 
     // Method to stop all modes
     void stopModes() {
-        //restartData();
         timer.stopTimer();
         stopButton.setDisabled(true);
         fitnessButton.setDisabled(false);
@@ -124,30 +155,23 @@ class MainScene {
         isCalmVsStressMode = false;
     }
 
-    // Check Calm vs Stress mode after 60 seconds
     void checkCalmVsStressMode() {
         if (millis() - calmVsStressStartTime >= 60000) {  // 60 seconds have passed
             if (sensorData.hasKey("Heartrate")) {
                 currentHeartRate = sensorData.get("Heartrate");
                 float averageHeartRate = getAverageHeartRate();
             
-                // Use the age entered from AgeScene
                 int age = ageScene.enteredAge;  // Dynamically get the age from AgeScene
-            
-                // Get min and max heart rate for the user's age group
                 int[] heartRateRange = getHeartRateRangeForAge(age);
                 int minHeartRate = heartRateRange[0];
                 int maxHeartRate = heartRateRange[1];
             
-                // Check if the heart rate is in the calm range or the stress range
                 if (currentHeartRate < averageHeartRate) {
-                    // User is calm
-                    fill(0, 255, 0);
+                    fill(0, 255, 0);  // Green for calm
                     textSize(25);
                     text("You are calm", .7 * width, .480 * height);
                 } else if (currentHeartRate > maxHeartRate || currentHeartRate < minHeartRate) {
-                    // User is stressed (if above max threshold or below min threshold)
-                    fill(255, 0, 0);
+                    fill(255, 0, 0);  // Red for stressed
                     textSize(25);
                     text("You are stressed", .7 * width, .480 * height);
                 }
@@ -155,7 +179,6 @@ class MainScene {
         }
     }
 
-    // Function to get heart rate range (min and max) based on age group
     int[] getHeartRateRangeForAge(int age) {
         if (age >= 20 && age <= 30) return new int[] {100, 170};  // 20-30 years: 100-170 bpm
         if (age >= 30 && age <= 40) return new int[] {95, 162};   // 30-40 years: 95-162 bpm
