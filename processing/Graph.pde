@@ -23,9 +23,39 @@ void setupGraph(){
   lineChart.setLineWidth(2);
 }
 
-void drawGraph(){
-    //if(!startedReading){return;}
+void drawRespiration() {
+    float posX = 0.50*width, posY = .22*height, sizeX = .45 * width, sizeY = .3*height; 
+    float rectX = .95*posX, rectY=.9*posY, rectSizeX = sizeX + 40, rectSizeY=sizeY+60;
     
+    fill(255,255,255);
+    rect(rectX, rectY, rectSizeX, rectSizeY,20);
+    
+    String title2 = "Respiration Monitor";
+    fill(32, 92, 122);
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    text(title2, .725*width, .225 * height);
+    
+    lineChart.draw(posX, posY, sizeX, sizeY);
+}
+
+void drawECG(){
+    float posX = 0.05*width, posY = .65*height, sizeX = .9 * width, sizeY = .3*height; 
+    float rectX = .5*posX, rectY=.9*posY, rectSizeX = sizeX + 40, rectSizeY=sizeY+80;
+    
+    fill(255,255,255);
+    rect(rectX, rectY, rectSizeX, rectSizeY,20);
+    
+    lineChart.draw(posX, posY, sizeX, sizeY);
+  
+    String title1 = "ECG Monitor";
+    fill(32, 92, 122);
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    text(title1, width / 5, .625 * height);
+}
+
+void drawGraph(){    
     if(timer.isRunning) {
         int heartRate = getHeartRate();
         float heartRatePercent = (heartRate/maxHeartRate)*100;
@@ -57,7 +87,7 @@ void drawGraph(){
     lineChart.setMaxX(max(x, MAX_VALUES));
     
     textSize(20);
-    lineChart.draw(0.05*width, .65*height, .9 * width, .3*height);
-    lineChart.draw(0.50*width, .3*height, .45 * width, .3*height);
-
+    
+    drawECG();
+    drawRespiration();
 }

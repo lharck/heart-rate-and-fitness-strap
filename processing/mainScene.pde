@@ -9,13 +9,15 @@ class MainScene {
     UIButton stressButton;   
     boolean isCalmVsStressMode = false;
     
+    float buttonSpacing = 10.0;
+    PImage logo;
+    
     
     int calmVsStressStartTime = -1;
     int currentHeartRate = -1;  // Variable to store real-time heart rate
     
     MainScene() {
         int btnHeights = 100;
-
         
         fitnessButton = new UIButton(.01 * width, btnHeights, .15 * width, .07 * height, "Fitness Mode", color(50, 205, 50));
         fitnessButton.setRoundedCorners(10);
@@ -58,11 +60,15 @@ class MainScene {
     }
 
     void draw() {
-        background(245);  
+
+        background(BG_COLOR_DEFAULT);  
         fill(32, 92, 122);
         rect(0, 0, width, .1 * height);
         
+        textFont(createFont("Arial Bold",10),10);
         drawTitles();
+        textFont(createFont("Arial",10),10);
+
         drawGraph();
         drawBarChart();
         timer.drawTimer();  
@@ -102,17 +108,7 @@ class MainScene {
         }
     }
 
-    void drawTitles() {
-        String title1 = "ECG Monitor";
-        fill(32, 92, 122);
-        textSize(30);
-        textAlign(CENTER, CENTER);
-        text(title1, width / 5, .625 * height);
-        
-        String title2 = "Respiration Monitor";
-        textAlign(CENTER, CENTER);
-        text(title2, width * 4 / 5, .275 * height);
-        
+    void drawTitles() {  
         String appName = "Health Tracker";
         fill(255, 255, 255);
         textSize(.06 * height);
@@ -123,7 +119,7 @@ class MainScene {
     void drawValues() {
         fill(0);
         textSize(30);
-        text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
+        //text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
     }
 
     void startFitnessMode() {

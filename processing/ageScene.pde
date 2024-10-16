@@ -20,7 +20,7 @@ class AgeScene {
     }
 
     void draw() {
-        background(245);
+        background(BG_COLOR_DEFAULT);
         fill(32, 92, 122);
         rect(0, 0, width, .1 * height);
         println("Drawing AgeScene");
