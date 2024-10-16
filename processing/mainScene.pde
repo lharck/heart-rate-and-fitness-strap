@@ -45,9 +45,6 @@ class MainScene {
         debugButton.setDisabled(DEBUG_MODE); 
         debugButton.setRoundedCorners(10);
         debugButton.setShadow(true);
-
-        
-        
         timer = new Timer(); 
 
         logo = loadImage("logo.png");
