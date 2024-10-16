@@ -11,11 +11,8 @@ class MainScene {
     
     
     int calmVsStressStartTime = -1;
-    int currentHeartRate = -1;  
-    PImage logo;
+    int currentHeartRate = -1;  // Variable to store real-time heart rate
     
-    float buttonSpacing = 20;
-
     MainScene() {
         int btnHeights = 100;
 
@@ -126,6 +123,7 @@ class MainScene {
     void drawValues() {
         fill(0);
         textSize(30);
+        text(title3, (width - textWidth(title2)) / 3.5, .275 * height);
     }
 
     void startFitnessMode() {
