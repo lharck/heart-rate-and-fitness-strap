@@ -43,4 +43,8 @@ class Timer {
         } 
         return 0;  // If timer is not running, return 0
     }
+    
+    boolean getIsRunning() {
+      return isRunning;
+    }
 }

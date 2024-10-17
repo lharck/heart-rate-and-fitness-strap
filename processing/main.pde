@@ -26,8 +26,10 @@ void draw() {
     int currTime = millis();
     int timeDiff = currTime - timeOfLastUpdate;
     while (timeDiff >= 10) {
-        updateGraph();
-        dataLoop();
+        if (timer.getIsRunning()) {
+            updateGraph();
+            dataLoop();
+        }
         timeDiff -= 10;
     }
     timeOfLastUpdate = currTime;
