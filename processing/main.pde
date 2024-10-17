@@ -7,9 +7,6 @@ AgeScene ageScene;
 int lastTime = millis();
 int timeOfLastUpdate = 0;
 
-int lastTime = millis();
-int timeOfLastUpdate = 0;
-
 // Scene management
 void setup() {
     size(1000, 900);
