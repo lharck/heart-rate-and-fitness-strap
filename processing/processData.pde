@@ -14,6 +14,18 @@ int minIndicesUntilNextHeartBeat = 15;
 
 Boolean DEBUG_MODE = false;
 
+int lastInhaleStartTime = -1;
+int lastExhaleStartTime = -1;
+
+boolean isInhaling = false;
+boolean isExhaling = false;
+
+float inhalationDuration = 0;
+float exhalationDuration = 0;
+
+float previousFSRReading = 0;
+int threshold = 10;  
+
 void setupData() {
     println(Serial.list());
 
@@ -96,11 +108,9 @@ int getHeartRate() {
   
   float avg = totalECGValuesInInterval / numECGValuesInInterval;
   IntList indicesOfHeartBeats = new IntList();
-  println("Average heart reading is " + avg);
   
   for (int i = max(0, ecgValues.size() - 300); i < ecgValues.size(); ++i) {
     if (ecgValues.get(i) - avg >= heartbeatDifferentialThreshold) {
-      println("Heart beat at position " + i + " of " + ecgValues.get(i) + " is above threshold, skipping 150 ms");
       indicesOfHeartBeats.append(i);
       i += minIndicesUntilNextHeartBeat;
     }
@@ -110,7 +120,6 @@ int getHeartRate() {
   int totalGapsBetweenRWaves = 0;
   
   if (indicesOfHeartBeats.size() < 2) {
-    println("Guaranteed R Waves less than 2, defaulting HR to 60");
     return 60;
   }
   
@@ -118,19 +127,14 @@ int getHeartRate() {
   float currVal = 0.0f;
   for (int i = 1; i < indicesOfHeartBeats.size(); ++i) {
     currVal = indicesOfHeartBeats.get(i);
-    println("Gap: " + (currVal - lastVal));
     totalIndicesBetweenEachRWave += (currVal - lastVal);
     lastVal = currVal;
     totalGapsBetweenRWaves++;
   }
-  println("Avg samples between beats: " + ((float)totalIndicesBetweenEachRWave/(float)totalGapsBetweenRWaves));
   
   float secondsBetweenBeats = ((float)totalIndicesBetweenEachRWave/(float)totalGapsBetweenRWaves)/100.0f;
   
-  println("Seconds between beats: " + secondsBetweenBeats);
-
   return (int)(60.0f / secondsBetweenBeats);
-  
   
   //float lastReading = ecgValues.get(max(0, ecgValues.size() - 300));
   //float currReading = 0.0f;
@@ -316,4 +320,27 @@ void dataLoop() {
   //println();
   currentHeartRate = getHeartRate();
   updateTimeInZone();
+
+  float currentFSRReading = getFSRReading();
+  float fsrDelta = currentFSRReading - previousFSRReading;
+
+  if (fsrDelta > threshold && !isInhaling) {
+    isInhaling = true;
+    isExhaling = false;
+    lastInhaleStartTime = millis();  
+    if (lastExhaleStartTime != -1) {
+      exhalationDuration = (lastInhaleStartTime - lastExhaleStartTime) / 1000.0;
+    }
+  }
+
+  if (fsrDelta < -threshold && !isExhaling) {
+    isExhaling = true;
+    isInhaling = false;
+    lastExhaleStartTime = millis();
+    if (lastInhaleStartTime != -1) {
+      inhalationDuration = (lastExhaleStartTime - lastInhaleStartTime) / 1000.0;
+    }
+  }
+
+  previousFSRReading = currentFSRReading;
 }

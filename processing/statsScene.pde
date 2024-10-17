@@ -30,8 +30,9 @@ class StatsScene extends PApplet {
         textSize(20);
         text("Current Heart Rate: " + currentHeartRate, width / 2, height / 4);  // Example stat
         text("Max Heart Rate: " + maxHeartRate, width / 2, height / 4 + 30);  // Example stat
-        text("Avg Heart Rate: " + restingRespirationRate, width / 2, height / 4 + 60);
-        text("Resting Respiration Rate: " + restingRespirationRate, width / 2, height / 4 + 90);
+        text("Resting Respiration Rate: " + restingRespirationRate, width / 2, height / 4 + 60);
+        text("Inhalation Duration: " + inhalationDuration, width / 2, height / 4 + 90);
+        text("Exhalation Duration: " + exhalationDuration, width / 2, height / 4 + 120);
         // Add more stats here as needed
     }
 }
