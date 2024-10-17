@@ -12,7 +12,7 @@ int restingRespirationRate = -1;
 float heartbeatDifferentialThreshold = 300.0;
 int minIndicesUntilNextHeartBeat = 15;
 
-Boolean DEBUG_MODE = false;
+Boolean DEBUG_MODE = true;
 
 int lastInhaleStartTime = -1;
 int lastExhaleStartTime = -1;

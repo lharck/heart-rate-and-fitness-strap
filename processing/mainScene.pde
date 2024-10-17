@@ -13,9 +13,8 @@ class MainScene {
     PImage logo;
     
     float buttonSpacing = 20;
-
     int stressStartTime = -1;
-    
+
     MainScene() {
         int btnHeights = 100;
         
@@ -44,6 +43,7 @@ class MainScene {
         debugButton.setDisabled(DEBUG_MODE); 
         debugButton.setRoundedCorners(10);
         debugButton.setShadow(true);
+        
         timer = new Timer(); 
 
         logo = loadImage("logo.png");
@@ -74,8 +74,6 @@ class MainScene {
         statsButton.draw();   // Draw Stats button
         
         image(logo, .009 * width, .009 * height, .09 * width, .09 * height);  // Add logo with proportional size
-        
-        //showHeartRate();  
 
         if (isStressMode) {
             checkStressMode();  
@@ -84,7 +82,6 @@ class MainScene {
 
     void mousePressed() {
         if (fitnessButton.isClicked(mouseX, mouseY)) {
-            beatStartTime = millis();
             startFitnessMode();
         }
 
@@ -93,12 +90,10 @@ class MainScene {
         }
 
         if (stressButton.isClicked(mouseX, mouseY)) {
-            beatStartTime = millis();
             startStressMode();
         }
 
         if (meditationButton.isClicked(mouseX, mouseY)) {
-            beatStartTime = millis(); // TODO: get rid of this repeat code
             startMeditationMode();
         }
 
@@ -108,7 +103,6 @@ class MainScene {
         }
 
         if (statsButton.isClicked(mouseX, mouseY)) {
-            // Open the new StatsScene in a new window
             PApplet.runSketch(new String[] {"StatsScene"}, new StatsScene());
             statsButton.setDisabled(true);
         }
@@ -121,7 +115,7 @@ class MainScene {
         textAlign(CENTER, CENTER);
         text(appName, .5 * width,  .05 * height);
     }
-    
+
     void startFitnessMode() {
         restartData();
         timer.startTimer();  
@@ -130,8 +124,10 @@ class MainScene {
         stressButton.setDisabled(false);
         meditationButton.setDisabled(false);
         isStressMode = false;  
+
+        trackCardioZone();
     }
-    
+
     void startStressMode() {
         restartData();
         isStressMode = true;
@@ -141,8 +137,10 @@ class MainScene {
         stopButton.setDisabled(false);
         fitnessButton.setDisabled(false);
         meditationButton.setDisabled(false);
+
+        monitorStressResponse();
     }
-    
+
     void startMeditationMode() {
         restartData();
         timer.startTimer();  
@@ -151,6 +149,8 @@ class MainScene {
         stopButton.setDisabled(false);
         stressButton.setDisabled(false);
         isStressMode = false;  
+
+        monitorBreathingPattern();
     }
 
     void stopModes() {
@@ -180,11 +180,50 @@ class MainScene {
     }
 
     int[] getHeartRateRangeForAge(int age) {
-        if (age >= 20 && age <= 30) return new int[] {100, 170};  // 20-30 years: 100-170 bpm
-        if (age >= 30 && age <= 40) return new int[] {95, 162};   // 30-40 years: 95-162 bpm
-        if (age >= 40 && age <= 50) return new int[] {90, 153};   // 40-50 years: 90-153 bpm
-        if (age >= 50 && age <= 60) return new int[] {85, 145};   // 50-60 years: 85-145 bpm
-        if (age >= 60 && age <= 70) return new int[] {80, 136};   // 60-70 years: 80-136 bpm
-        return new int[] {75, 128};                               // 70+ years: 75-128 bpm
+        if (age >= 20 && age <= 30) return new int[] {100, 170};  
+        if (age >= 30 && age <= 40) return new int[] {95, 162};   
+        if (age >= 40 && age <= 50) return new int[] {90, 153};   
+        if (age >= 50 && age <= 60) return new int[] {85, 145};   
+        if (age >= 60 && age <= 70) return new int[] {80, 136};   
+        return new int[] {75, 128};                              
+    }
+
+    void trackCardioZone() {
+        currentHeartRate = getHeartRate();  // Get real-time heart rate
+        float heartRatePercent = (currentHeartRate / maxHeartRate) * 100;
+        int zoneIndex = getUserZone(heartRatePercent);
+
+        // Update cardio zone display and track the graph
+        //updateCardioGraph();
+        println("Tracking cardio zone in Fitness Mode...");
+    }
+
+    void monitorStressResponse() {
+        println("Monitoring stress response...");
+        currentHeartRate = getHeartRate();
+        //currentRespirationRate = getRespirationRate();
+        
+        if (currentHeartRate > restingHeartRate) {
+            println("User might be stressed.");
+        } else {
+            println("User seems calm.");
+        }
+    }
+
+    // **Meditation Mode**: Monitor and display breathing pattern.
+    void monitorBreathingPattern() {
+        if (inhalationDuration / exhalationDuration != 1 / 3.0) {
+            println("Incorrect breathing pattern during meditation.");
+            displayBreathingAlert();
+        } else {
+            println("Correct breathing pattern maintained.");
+        }
+    }
+    
+    // Helper method to display an alert for incorrect breathing pattern.
+    void displayBreathingAlert() {
+        fill(255, 0, 0);
+        textSize(25);
+        text("Correct your breathing pattern!", width / 2, height / 2);
     }
 }
