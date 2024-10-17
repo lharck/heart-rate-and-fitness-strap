@@ -22,6 +22,4 @@ class StatsScene extends PApplet {
         text("Max Heart Rate: " + maxHeartRate, width / 2, height / 2 + 30);  // Example stat
         // Add more stats here as needed
     }
-    
-   
 }

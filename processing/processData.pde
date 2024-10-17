@@ -8,9 +8,11 @@ Boolean startedReading = true;
 int currentHeartRate = 60;
 int restingHeartRate = 60;
 
-Boolean DEBUG_MODE = false;
+Boolean DEBUG_MODE = true; //Serial.list().size() <= 0;
 
 void setupData() {
+    println(Serial.list());
+
   if (!DEBUG_MODE) {
     String whichPort = Serial.list()[0];
     myPort = new Serial(this, whichPort, 115200);
