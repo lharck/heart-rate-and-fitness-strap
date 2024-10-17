@@ -91,6 +91,24 @@ void findCurrMaxFSRSample() {
 
 void drawGraph() {
   if (timer.isRunning) {
+  }
+
+  ecgChart.setMinX(max((x-MAX_VALUES+1) / 100.0, 0));
+  ecgChart.setMaxX(max(x/100.0, MAX_VALUES/100.0));
+
+  respirationChart.setMinX(max((x-MAX_VALUES+1) / 100.0, 0));
+  respirationChart.setMaxX(max(x/100.0, MAX_VALUES/100.0));
+  
+  findCurrMaxFSRSample();
+  respirationChart.setMaxY(max(250.0, currMaxFSRSample));
+
+  textSize(20);
+
+  drawECG();
+  drawRespiration();
+}
+
+void updateGraph() {
     float ecgReading = getECGReading();
     float fsrReading = getFSRReading();
 
@@ -133,19 +151,4 @@ void drawGraph() {
 
     ecgChart.setData(ecgChartX.toArray(), ecgChartY.toArray());
     respirationChart.setData(respirationChartX.toArray(), respirationChartY.toArray());
-  }
-
-  ecgChart.setMinX(max((x-MAX_VALUES+1) / 100.0, 0));
-  ecgChart.setMaxX(max(x/100.0, MAX_VALUES/100.0));
-
-  respirationChart.setMinX(max((x-MAX_VALUES+1) / 100.0, 0));
-  respirationChart.setMaxX(max(x/100.0, MAX_VALUES/100.0));
-  
-  findCurrMaxFSRSample();
-  respirationChart.setMaxY(max(250.0, currMaxFSRSample));
-
-  textSize(20);
-
-  drawECG();
-  drawRespiration();
 }

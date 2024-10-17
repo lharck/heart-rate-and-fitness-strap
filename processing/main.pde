@@ -4,6 +4,9 @@ import org.gicentre.utils.stat.*;
 MainScene mainScene;
 AgeScene ageScene;
 
+int lastTime = millis();
+int timeOfLastUpdate = 0;
+
 // Scene management
 void setup() {
     size(1000, 900);
@@ -20,7 +23,14 @@ void draw() {
         ageScene.draw();
     }
     
-    dataLoop();
+    int currTime = millis();
+    int timeDiff = currTime - timeOfLastUpdate;
+    while (timeDiff >= 10) {
+        updateGraph();
+        dataLoop();
+        timeDiff -= 10;
+    }
+    timeOfLastUpdate = currTime;
 }
 
 // Ensure you only handle mouse clicks in the current scene
