@@ -24,5 +24,5 @@ int getUserZone(float heartRatePercent){
         }
     }
     
-    return -1;
+    return 0;
 }

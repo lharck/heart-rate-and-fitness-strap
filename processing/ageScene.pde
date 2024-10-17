@@ -66,9 +66,10 @@ class AgeScene {
                 textAlign(CENTER, CENTER);
                 text(
                 "Your resting heart rate: " + currentHeartRate
-                + "\nYour resting respiratory rate: " + currentHeartRate,
+                + "\nYour resting respiratory rate: " + currentRespiratoryRate,
                 .5 * width, .5 * height);  
                 restingHeartRate = currentHeartRate;
+                restingRespiratoryRate = currentRespiratoryRate;
                 nextButton.draw();    
             }
         }
