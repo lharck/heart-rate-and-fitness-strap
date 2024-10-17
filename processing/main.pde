@@ -26,7 +26,10 @@ void draw() {
     int currTime = millis();
     int timeDiff = currTime - timeOfLastUpdate;
     while (timeDiff >= 10) {
-        if (timer.getIsRunning()) {
+        if (timer.getIsRunning() || currentScene == "AgeScene") {
+          if (currentScene == "AgeScene") {
+            updateTimeInZone();
+          }
             updateGraph();
             dataLoop();
         }

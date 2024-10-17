@@ -9,7 +9,7 @@ int currentHeartRate = 60;
 int currentRespiratoryRate = 50;
 int restingHeartRate = 60;
 int restingRespiratoryRate = 50;
-float respiratoryToleranceMin = 1.0f;
+float respiratoryToleranceMin = 50.0f;
 
 int[] respiratoryRateZoneTotals = { 50, 50, 50, 50, 50 };
 int[] respiratoryRateZoneSamples = { 1, 1, 1, 1, 1 };
@@ -17,7 +17,7 @@ int[] respiratoryRateZoneSamples = { 1, 1, 1, 1, 1 };
 float heartbeatDifferentialThreshold = 300.0;
 int minIndicesUntilNextHeartBeat = 15;
 
-Boolean DEBUG_MODE = true;
+Boolean DEBUG_MODE = false;
 
 int lastInhaleStartTime = -1;
 int lastExhaleStartTime = -1;
