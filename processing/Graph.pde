@@ -110,9 +110,6 @@ void updateGraph() {
     float ecgReading = getECGReading();
     float fsrReading = getFSRReading();
 
-    //float heartRatePercent = (heartRate/maxHeartRate)*100;
-    //int userZoneIdx = getUserZone(heartRatePercent);
-
     x+=1;
 
     ecgChartY.append(ecgReading);
@@ -130,16 +127,7 @@ void updateGraph() {
       respirationChartY.remove(0);
       respirationChartX.remove(0);
     }
-
-    //color chosenColor = color(255,255,255);
-
-    //if (userZoneIdx != -1){
-    //    chosenColor = zoneColors[userZoneIdx];
-    //}
-
-    //ecgChart.setPointColour(chosenColor);
-    //ecgChart.setLineColour(chosenColor);
-
+    
     ecgChart.setData(ecgChartX.toArray(), ecgChartY.toArray());
     respirationChart.setData(respirationChartX.toArray(), respirationChartY.toArray());
 }
