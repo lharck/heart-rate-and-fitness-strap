@@ -9,6 +9,8 @@ int MAX_VALUES = 100;
 float x = 0;
 int y = 0;
 
+float beatStartTime = -99999;
+
 void setupGraph() {
   ecgChart = new XYChart(this);
   ecgChartX = new FloatList();
@@ -91,6 +93,13 @@ void drawGraph() {
   if (timer.isRunning) {
     float ecgReading = getECGReading();
     float fsrReading = getFSRReading();
+
+    // println(fsrReading);
+    if(fsrReading == 0){
+      float timeBetween = millis()-beatStartTime;
+      println("Time between: " + timeBetween/1000.0);
+      beatStartTime = millis();
+    }
 
     //float heartRatePercent = (heartRate/maxHeartRate)*100;
     //int userZoneIdx = getUserZone(heartRatePercent);

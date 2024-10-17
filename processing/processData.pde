@@ -12,7 +12,6 @@ int restingRespirationRate = -1;
 Boolean DEBUG_MODE = true;
 
 void setupData() {
-    println(Serial.list());
 
   if (!DEBUG_MODE) {
     String whichPort = Serial.list()[0];
@@ -111,15 +110,22 @@ float getFSRReading() {
   float fsrv = -1;
 
   if (DEBUG_MODE) {
-    fsrv = (int)random(0, maxFSRReading);
+    fsrv = 1; //(int)random(0, maxFSRReading);
 
     if (fsrValues.size() >= 1) {
       fsrv = fsrValues.get(fsrValues.size()-1);
     }
 
     int sign = (int(random(2)) == 0) ? -1 : 1;
-    fsrv += (sign*random(1, 2));
+
+    fsrv += 1; //(sign*random(1, 2));
+    // println(fsrv, (fsrv % 10));
+    if(fsrv==50){
+      fsrv = 0;
+    }
     fsrv = constrain(fsrv, 0, maxFSRReading);
+    fsrValues.append(fsrv);
+
   } else if (sensorData.hasKey("FSR")) {
     fsrv = sensorData.get("FSR");
 

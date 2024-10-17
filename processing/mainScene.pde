@@ -84,6 +84,7 @@ class MainScene {
 
     void mousePressed() {
         if (fitnessButton.isClicked(mouseX, mouseY)) {
+            beatStartTime = millis();
             startFitnessMode();
         }
 
@@ -92,10 +93,12 @@ class MainScene {
         }
 
         if (stressButton.isClicked(mouseX, mouseY)) {
+            beatStartTime = millis();
             startStressMode();
         }
 
         if (meditationButton.isClicked(mouseX, mouseY)) {
+            beatStartTime = millis(); // TODO: get rid of this repeat code
             startMeditationMode();
         }
 

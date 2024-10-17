@@ -18,7 +18,6 @@ void setupBarChart(){
   barChart.transposeAxes(true);
 }
 
-
 void drawBarChart(){
     float posX = 0.1*width, posY = .25*height, sizeX = .3 * width, sizeY = .3*height; 
     float rectX = .5*posX, rectY=.8*posY, rectSizeX=1.25*sizeX, rectSizeY=1.25*sizeY;
