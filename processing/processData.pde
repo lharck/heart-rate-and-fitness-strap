@@ -78,7 +78,7 @@ int getHeartRate() {
   // if a rate of change of over -100 is detected in the next 12 samples, with a total climb of over 300, then a drop of 300, we consider it a valid heartbeat, otherwise ignore it
 
   if (ecgValues.size() == 0) {
-    println("No ECG values found, defaulting HR to 60");
+   // println("No ECG values found, defaulting HR to 60");
     return 60;
   }
   float lastReading = ecgValues.get(max(0, ecgValues.size() - 300));
