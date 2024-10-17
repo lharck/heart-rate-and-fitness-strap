@@ -7,7 +7,7 @@ int[] zones = {60, 70, 80, 90, 100};
 float[] timeInEachZone = {0,0,0,0,0};
 String[] zoneNames = {"Very Light", "Light", "Moderate", "Hard", "Maximum"};
 String currentState = "AskingForAge";
-String currentScene = "AgeScene"; 
+String currentScene = "MainScene"; 
 
 color[] zoneColors = {
     color(173, 173, 173), // grey 

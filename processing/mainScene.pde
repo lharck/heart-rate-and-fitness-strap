@@ -120,6 +120,7 @@ class MainScene {
     }
     
     void startFitnessMode() {
+        restartData();
         timer.startTimer();  
         fitnessButton.setDisabled(true);
         stopButton.setDisabled(false);
@@ -140,6 +141,7 @@ class MainScene {
     }
     
     void startMeditationMode() {
+        restartData();
         timer.startTimer();  
         meditationButton.setDisabled(true);
         fitnessButton.setDisabled(false);

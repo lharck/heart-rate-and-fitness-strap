@@ -7,8 +7,9 @@ String lineString = "";
 Boolean startedReading = true;
 int currentHeartRate = 60;
 int restingHeartRate = 60;
+int restingRespirationRate = -1;
 
-Boolean DEBUG_MODE = true; //Serial.list().size() <= 0;
+Boolean DEBUG_MODE = true;
 
 void setupData() {
     println(Serial.list());
