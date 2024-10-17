@@ -55,15 +55,15 @@ void drawRespiration() {
 
   String title2 = "Respiration Monitor";
   fill(32, 92, 122);
-  textSize(12);
+  textSize(25);
   textAlign(CENTER, CENTER);
   text(title2, .725*width, .225 * height);
-
+  textSize(12);
   respirationChart.draw(posX, posY, sizeX, sizeY);
 }
 
 void drawECG() {
-  float posX = 0.05*width, posY = .65*height, sizeX = .9 * width, sizeY = .3*height;
+  float posX = 0.10*width, posY = .65*height, sizeX = .875 * width, sizeY = .3*height;
   float rectX = .5*posX, rectY=.9*posY, rectSizeX = sizeX + 40, rectSizeY=sizeY+80;
 
   fill(255, 255, 255);
@@ -71,10 +71,10 @@ void drawECG() {
 
   String title1 = "ECG Monitor";
   fill(32, 92, 122);
-  textSize(12);
+  textSize(25);
   textAlign(CENTER, CENTER);
   text(title1, width / 5, .625 * height);
-
+  textSize(12);
   ecgChart.draw(posX, posY, sizeX, sizeY);
 }
 

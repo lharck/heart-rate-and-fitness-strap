@@ -33,7 +33,7 @@ void drawBarChart(){
     
     String title = " Cardio Monitor";
     fill(32, 92, 122);
-    textSize(30);
+    textSize(25);
     text(title, rectX+(rectSizeX/2), rectY + (.075*rectSizeY));
 
 }

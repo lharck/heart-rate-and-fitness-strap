@@ -1,4 +1,4 @@
-int CALIBRATION_TIME = 3;
+int CALIBRATION_TIME = 5;
 
 class AgeScene {
     UIButton nextButton; 
@@ -10,7 +10,8 @@ class AgeScene {
     String title = "Health Tracker";  
 
     AgeScene() {  
-        nextButton = new UIButton(0.35 * width, 0.65 * height, 0.15 * width, 0.07 * height, "Next"); 
+        float nextButtonXSize = 0.15 * width;
+        nextButton = new UIButton((0.5  * width)-(nextButtonXSize/2), 0.65 * height, nextButtonXSize, 0.07 * height, "Next"); 
         ageTextBox = new TEXTBOX((int)(0.45 * width), (int)(0.435 * height), (int)(0.2 * width), 35);  
 
         logo = loadImage("logo.png");
@@ -48,26 +49,44 @@ class AgeScene {
         } 
         else if (currentState == "CalcHeartRate") {
             float timePassed = (millis() - startRecordingTimestamp) / 1000;
-            println(timePassed);
 
             if (timePassed < CALIBRATION_TIME) {
                 fill(32, 92, 122);
                 textSize(30);
                 textAlign(CENTER, CENTER);
-                text("Calculating Your Resting Heart Rate...\nTime till complete: " + (int)(CALIBRATION_TIME - timePassed) +
-                     "\nCurrent Value: " + currentHeartRate, .5 * width, .5 * height);  
+                text("Calculating Your Vitals...\n"
+                     + "\nResting Heart Rate: " + currentHeartRate
+                     + "\nResting Respiratory Rate: " + currentHeartRate
+                     + "\n\nTime till complete: " + (int)(CALIBRATION_TIME - timePassed),
+                     .5 * width, .5 * height);  
             }
-            else if (timePassed >= CALIBRATION_TIME && timePassed <= (CALIBRATION_TIME + 5)) {
+            else if (timePassed >= CALIBRATION_TIME) {
                 fill(32, 92, 122);
                 textSize(30);
                 textAlign(CENTER, CENTER);
-                text("Your resting heart rate: " + currentHeartRate, .5 * width, .5 * height);  
+                text(
+                "Your resting heart rate: " + currentHeartRate
+                + "\nYour resting respiratory rate: " + currentHeartRate,
+                .5 * width, .5 * height);  
                 restingHeartRate = currentHeartRate;
-            }
-            else if (timePassed >= CALIBRATION_TIME + 5) {
-                currentScene = "MainScene";
+                nextButton.draw();    
             }
         }
+    }
+
+    void clickedAgeButton(){
+        if (ageTextBox.Text.length() > 0 && isNumeric(ageTextBox.Text)) {
+            enteredAge = int(ageTextBox.Text);
+            maxHeartRate = 220 - enteredAge; 
+            currentState = "CalcHeartRate";   
+            startRecordingTimestamp = millis(); 
+        } else {
+            println("Please enter a valid age."); 
+        }
+    }
+
+    void clickedNextScene(){
+        currentScene = "MainScene";
     }
 
     void mousePressed() {
@@ -75,14 +94,15 @@ class AgeScene {
             ageTextBox.PRESSED(mouseX, mouseY);
 
             if (nextButton.isClicked(mouseX, mouseY)) {
-                if (ageTextBox.Text.length() > 0 && isNumeric(ageTextBox.Text)) {
-                    enteredAge = int(ageTextBox.Text);
-                    maxHeartRate = 220 - enteredAge; 
-                    currentState = "CalcHeartRate";   
-                    startRecordingTimestamp = millis(); 
-                } else {
-                    println("Please enter a valid age."); 
+                float timePassed = (millis() - startRecordingTimestamp) / 1000;
+
+                if(timePassed >= CALIBRATION_TIME){
+                    clickedNextScene();
+                } 
+                else {
+                    clickedAgeButton();
                 }
+                
             }
         }
     }
