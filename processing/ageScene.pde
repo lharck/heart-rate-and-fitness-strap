@@ -1,4 +1,4 @@
-int CALIBRATION_TIME = 5;
+int CALIBRATION_TIME = 10;
 
 class AgeScene {
     UIButton nextButton; 
@@ -24,7 +24,6 @@ class AgeScene {
         background(BG_COLOR_DEFAULT);
         fill(32, 92, 122);
         rect(0, 0, width, .1 * height);
-        println("Drawing AgeScene");
 
         if (logo != null) {
             image(logo, .009 * width, .009 * height, .09 * width, .09 * height);
@@ -56,7 +55,7 @@ class AgeScene {
                 textAlign(CENTER, CENTER);
                 text("Calculating Your Vitals...\n"
                      + "\nResting Heart Rate: " + currentHeartRate
-                     + "\nResting Respiratory Rate: " + currentHeartRate
+                     + "\nResting Respiratory Rate: " + currentRespiratoryRate
                      + "\n\nTime till complete: " + (int)(CALIBRATION_TIME - timePassed),
                      .5 * width, .5 * height);  
             }

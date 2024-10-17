@@ -32,7 +32,7 @@ float previousFSRReading = 0;
 int threshold = 10;
 
 void setupData() {
-    println(Serial.list());
+  println(Serial.list());
 
   if (!DEBUG_MODE) {
     String whichPort = Serial.list()[0];
@@ -289,14 +289,13 @@ float getECGReading() {
     ecgValues.append(ecgv);
   } else if (sensorData.hasKey("ECG")) {
     ecgv = sensorData.get("ECG");
-    
+
     // if we lose the heart rate, use the previous cached value, if it exists
     if (ecgv <= 0) {
       if (ecgValues.size()>=1) {
         ecgv = ecgValues.get(ecgValues.size()-1);
       }
-    }
-    else {
+    } else {
       ecgValues.append(ecgv);
     }
   }
@@ -320,6 +319,7 @@ float getFSRReading() {
     } else {
       fsrv = 0;
     }
+    fsrValues.append(fsrv);
   } else if (sensorData.hasKey("FSR")) {
     fsrv = sensorData.get("FSR");
 
