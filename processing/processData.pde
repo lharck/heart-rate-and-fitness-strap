@@ -32,7 +32,7 @@ float previousFSRReading = 0;
 int threshold = 10;
 
 void setupData() {
-  println(Serial.list());
+    println(Serial.list());
 
   if (!DEBUG_MODE) {
     String whichPort = Serial.list()[0];
@@ -82,7 +82,17 @@ void readSerial() {
 //float getAverageHeartRate() {
 //float sumOfValues = 0;
 //float valuesUsed = 0;
+//float sumOfValues = 0;
+//float valuesUsed = 0;
 
+//for(int i = max(0, heartRateValues.size() - 5); i < heartRateValues.size(); i++)
+//{
+//    float hrVal = heartRateValues.get(i);
+//    sumOfValues += hrVal;
+//    valuesUsed++;
+//}
+//return sumOfValues/valuesUsed;
+//return 60;
 //for(int i = max(0, heartRateValues.size() - 5); i < heartRateValues.size(); i++)
 //{
 //    float hrVal = heartRateValues.get(i);
@@ -279,13 +289,14 @@ float getECGReading() {
     ecgValues.append(ecgv);
   } else if (sensorData.hasKey("ECG")) {
     ecgv = sensorData.get("ECG");
-
+    
     // if we lose the heart rate, use the previous cached value, if it exists
     if (ecgv <= 0) {
       if (ecgValues.size()>=1) {
         ecgv = ecgValues.get(ecgValues.size()-1);
       }
-    } else {
+    }
+    else {
       ecgValues.append(ecgv);
     }
   }
@@ -309,14 +320,14 @@ float getFSRReading() {
     } else {
       fsrv = 0;
     }
-    fsrValues.append(fsrv);
   } else if (sensorData.hasKey("FSR")) {
     fsrv = sensorData.get("FSR");
 
     // if we lose the heart rate, use the previous cached value, if it exists
     if (fsrv <= 0) {
-      if (fsrValues.size()>=1)
+      if (fsrValues.size()>=1) {
         fsrv = fsrValues.get(fsrValues.size()-1);
+      }
     } else {
       fsrValues.append(fsrv);
     }
@@ -335,6 +346,7 @@ void restartData() {
 
   respirationChartX.clear();
   respirationChartY.clear();
+
 
   ecgChartX.clear();
   ecgChartY.clear();
@@ -356,6 +368,7 @@ void updateTimeInZone() {
   timeInEachZone[userZoneIdx]+=10;
   respiratoryRateZoneSamples[userZoneIdx] += 1;
   respiratoryRateZoneTotals[userZoneIdx] += currentRespiratoryRate;
+  
   maxTimeInEachZone = max(timeInEachZone[userZoneIdx], maxTimeInEachZone);
 }
 
