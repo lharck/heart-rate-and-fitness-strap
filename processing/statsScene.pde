@@ -1,5 +1,6 @@
 class StatsScene extends PApplet {
-
+    PImage logo;
+   
     void settings() {
         size(400, 400); 
     }
@@ -11,15 +12,24 @@ class StatsScene extends PApplet {
     }
 
     void draw() {
-        background(245);  
-        fill(50, 50, 150);
-        text("Statistics Overview", width / 2, height / 5);  
+        background(245); 
+        fill(32, 92, 122);
+        rect(0, 0, width, .125 * height);
+        
+        
+        String title = "Statistics Overview";
+        fill(255,255,255);
+        textSize(.1 * height);
+        textAlign(CENTER, CENTER);
+        text(title, width / 2, height/16);  
         
         
         fill(0);
-        textSize(15);
-        text("Current Heart Rate: " + currentHeartRate, width / 2, height / 2);  // Example stat
-        text("Max Heart Rate: " + maxHeartRate, width / 2, height / 2 + 30);  // Example stat
+        textSize(20);
+        text("Current Heart Rate: " + currentHeartRate, width / 2, height / 4);  // Example stat
+        text("Max Heart Rate: " + maxHeartRate, width / 2, height / 4 + 30);  // Example stat
+        text("Avg Heart Rate: " + restingRespirationRate, width / 2, height / 4 + 60);
+        text("Resting Respiration Rate: " + restingRespirationRate, width / 2, height / 4 + 90);
         // Add more stats here as needed
     }
     
