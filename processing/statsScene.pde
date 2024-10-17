@@ -16,12 +16,14 @@ class StatsScene extends PApplet {
         fill(32, 92, 122);
         rect(0, 0, width, .125 * height);
         
-        
+        textFont(createFont("Arial Bold",10),10);
         String title = "Statistics Overview";
         fill(255,255,255);
         textSize(.1 * height);
         textAlign(CENTER, CENTER);
         text(title, width / 2, height/16);  
+        textFont(createFont("Arial",10),10);
+
         
         
         fill(0);
